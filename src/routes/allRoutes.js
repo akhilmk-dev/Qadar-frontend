@@ -49,6 +49,7 @@ import RedeemSubscriptionList from "pages/RedeemSubscriptions/RedeemSubscription
 import RitualList from "pages/RitualCalender/RitualList";
 import PaymentLogList from "pages/PaymentLogs/PaymentLogList";
 import UserTokenList from "pages/UserTokens/UserTokenList";
+import UserXPPointsList from "pages/UserPoints/UserPointList";
 
 
 const userRoutes = [
@@ -83,7 +84,8 @@ const userRoutes = [
    {path:"/rituals",component:<RitualList />},
    {path:"/user-tokens",component:<UserTokenList />},
    {path:"/paymentlogs",component:<PaymentLogList />},
-   {path:'/customerDetails/:id', component:<CustomerDetails />}
+   {path:'/customerDetails/:id', component:<CustomerDetails />},
+   {path:'/userPointList', component:<UserXPPointsList/>}
 ];
 
 const authRoutes = [

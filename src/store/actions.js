@@ -53,3 +53,5 @@ export * from "./PaymentLogs/actions"
 
 // user token
 export * from "./UserTokens/actions"
+
+export * from "./UserPoints/actions"

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
 import Breadcrumb from 'components/Common/Breadcrumb2';
-import UserXPPointsTable from './UserXPPointsTable';
-import { getUserXPPointsRequest } from 'store/actions'; // adjust to your actual action path
+
+import { fetchUserXPPointsRequest  } from 'store/actions'; // adjust to your actual action path
 
 const UserXPPointsList = () => {
   const dispatch = useDispatch();
@@ -17,8 +17,10 @@ const UserXPPointsList = () => {
     (state) => state.UserXPPoints // adjust according to your reducer name
   );
 
+  console.log("data:",data);  
+
   useEffect(() => {
-    dispatch(getUserXPPointsRequest({ page, limit, search }));
+    dispatch(fetchUserXPPointsRequest({ page, limit, search }));
   }, [dispatch, page, limit, search]);
 
   return (

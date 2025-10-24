@@ -303,6 +303,15 @@ const SidebarContent = ({ t }) => {
                 <span>{t("Roles")}</span>
               </Link>
             </li>}
+
+            
+            {availablePaths?.includes('/userPointList')  && <li>
+              <Link to="/userPointList" className="waves-effect" onClick={() => { handleMenuItemClick("/userPointList"); tToggle2(); }}>
+                <LiaUserEditSolid size={22} className="me-2" />
+                <span>{t("User Points")}</span>
+              </Link>
+            </li>}
+
           </ul>
         </div>
       </SimpleBar>
