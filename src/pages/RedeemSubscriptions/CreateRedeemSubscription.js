@@ -16,7 +16,7 @@ const validationSchema = Yup.object({
 const CreateRedeemSubscription = ({
   visible,
   handleClose,
-  initialData = {},
+  initialData,
   onSubmit,
   customerOptions = [],
   reedemPlanOptions = [],

@@ -16,7 +16,7 @@ const LevelList = () => {
 
   const permissions = JSON.parse(localStorage.getItem('permissions'));
   const hasAddPermission = permissions?.some(
-    (item) => item?.permission_name === 'Add level'
+    (item) => item?.permission_name === 'Level Add'
   );
 
 

@@ -7,7 +7,7 @@ import Select from "react-select";
 import { ClipLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 
-const recurringTypeOptions = [
+const recurrenceTypeOptions = [
   { value: "daily", label: "Daily" },
   { value: "weekly", label: "Weekly" },
   { value: "monthly", label: "Monthly" },
@@ -19,7 +19,7 @@ const visibilityOptions = [
   { value: "global", label: "Global" },
 ];
 
-const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
+const CreateRitual = ({ visible, handleClose, initialData = "", onSubmit }) => {
   const [previewImage, setPreviewImage] = useState(initialData?.image || "");
   const loading = useSelector((state) => state.Ritual.loading);
 
@@ -36,20 +36,20 @@ const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
       time: initialData?.time || "",
       description: initialData?.description || "",
       recurring: initialData?.recurring || false,
-      recurringType: initialData?.recurrenceType || "",
-      visibility: initialData?.visibility || "",
+      recurrenceType: initialData?.recurrenceType || "",
+      visibility: "global",
       reminder: initialData?.reminder || false,
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       source: Yup.string().required("Source is required"),
       date: Yup.string().required("Date is required"),
-      recurringType: Yup.string().when("recurring", {
+      recurrenceType: Yup.string().when("recurring", {
         is: true,
         then: (schema) => schema.required("Recurring type is required"),
         otherwise: (schema) => schema.nullable().notRequired(),
       }),
-      visibility: Yup.string().required("Visibility is required"),
+      visibility: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       if (initialData?._id) {
@@ -126,7 +126,18 @@ const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
               className="form-control"
               name="date"
               value={formik.values.date}
-              onChange={formik.handleChange}
+              min={new Date().toISOString().split("T")[0]} // 
+              onChange={(e) => {
+                const selectedDate = e.target.value;
+                const today = new Date().toISOString().split("T")[0];
+
+                // Prevent selecting/typing a past date
+                if (selectedDate < today) {
+                  formik.setFieldValue("date", today);
+                } else {
+                  formik.handleChange(e);
+                }
+              }}
             />
             {formik.touched.date && formik.errors.date && (
               <span className="text-danger small">{formik.errors.date}</span>
@@ -145,27 +156,6 @@ const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
             />
           </div>
 
-          {/* Visibility */}
-          <div className="mb-3 col-md-6 col-12">
-            <label>
-              Visibility <span className="text-danger">*</span>
-            </label>
-            <Select
-              options={visibilityOptions}
-              name="visibility"
-              value={visibilityOptions.find(
-                (opt) => opt.value === formik.values.visibility
-              )}
-              onChange={(option) =>
-                formik.setFieldValue("visibility", option.value)
-              }
-            />
-            {formik.touched.visibility && formik.errors.visibility && (
-              <span className="text-danger small">
-                {formik.errors.visibility}
-              </span>
-            )}
-          </div>
 
           {/* Description */}
           <div className="mb-3 col-12">
@@ -188,7 +178,7 @@ const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
                 checked={formik.values.reminder}
                 onChange={(checked) => formik.setFieldValue("reminder", checked)}
                 style={{
-                  backgroundColor: formik.values.reminder ? "#c56797" : "#d9d9d9", 
+                  backgroundColor: formik.values.reminder ? "#c56797" : "#d9d9d9",
                 }}
               />
             </div>
@@ -198,7 +188,7 @@ const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
                 checked={formik.values.recurring}
                 onChange={(checked) => formik.setFieldValue("recurring", checked)}
                 style={{
-                  backgroundColor: formik.values.recurring ? "#c56797" : "#d9d9d9", 
+                  backgroundColor: formik.values.recurring ? "#c56797" : "#d9d9d9",
                 }}
               />
             </div>
@@ -210,19 +200,19 @@ const CreateRitual = ({ visible, handleClose, initialData = {}, onSubmit }) => {
                 Recurring Type <span className="text-danger">*</span>
               </label>
               <Select
-                options={recurringTypeOptions}
-                name="recurringType"
-                value={recurringTypeOptions.find(
-                  (opt) => opt.value === formik.values.recurringType
+                options={recurrenceTypeOptions}
+                name="recurrenceType"
+                value={recurrenceTypeOptions.find(
+                  (opt) => opt.value === formik.values.recurrenceType
                 )}
                 onChange={(option) =>
-                  formik.setFieldValue("recurringType", option?.value)
+                  formik.setFieldValue("recurrenceType", option?.value)
                 }
                 isClearable={true}
               />
-              {formik.touched.recurringType && formik.errors.recurringType && (
+              {formik.touched.recurrenceType && formik.errors.recurrenceType && (
                 <span className="text-danger small">
-                  {formik.errors.recurringType}
+                  {formik.errors.recurrenceType}
                 </span>
               )}
             </div>

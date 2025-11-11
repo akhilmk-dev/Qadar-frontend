@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 
-const CreatePlan = ({ visible, handleClose, initialData = {}, onSubmit }) => {
+const CreatePlan = ({ visible, handleClose, initialData, onSubmit }) => {
   const loading = useSelector((state) => state.Plan.loading);
   const formik = useFormik({
     enableReinitialize: true,

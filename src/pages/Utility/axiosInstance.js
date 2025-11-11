@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-console.log(process.env.REACT_APP_BASE_URL)
+
 // Add request interceptor to attach the access token to every request
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -75,6 +75,9 @@ axiosInstance.interceptors.response.use(
         showError("Something went wrong")
       }
     }else if(error.response.status === 409){
+      showError(error.response.data?.message)
+    }else if(error.response.status === 403){
+      window.location.href = "/pages-403"
       showError(error.response.data?.message)
     }
 

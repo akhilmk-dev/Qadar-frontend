@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Switch } from 'antd';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
@@ -10,17 +10,18 @@ import { useSelector } from 'react-redux';
 const CreateAffirmation = ({
   visible,
   handleClose,
-  initialData = {},
+  initialData,
   onSubmit,
   moodOptions = [],
 }) => {
   const loading = useSelector((state) => state.Affirmation.loading);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       text: initialData?.text || '',
       langCode: initialData?.langCode || '',
-      active: initialData?.active ?? true,
+      active: initialData?.active ?? true, 
       moodId: initialData?.moodId?._id || null,
     },
     validationSchema: Yup.object({
@@ -34,7 +35,7 @@ const CreateAffirmation = ({
     onSubmit: (values, { resetForm }) => {
       const payload = {
         ...values,
-        moodId: values.moodId,
+        active: values.active, 
       };
       if (initialData?._id) {
         onSubmit(initialData._id, payload, () => {
@@ -112,8 +113,12 @@ const CreateAffirmation = ({
           </label>
           <Select
             options={moodOptions}
-            value={moodOptions?.filter(item=> item?.value == formik.values.moodId)}
-            onChange={(selected) => formik.setFieldValue('moodId', selected?.value)}
+            value={moodOptions?.filter(
+              (item) => item?.value === formik.values.moodId
+            )}
+            onChange={(selected) =>
+              formik.setFieldValue('moodId', selected?.value)
+            }
             onBlur={() => formik.setFieldTouched('moodId', true)}
             isClearable={true}
             placeholder="Select Mood"
@@ -123,26 +128,40 @@ const CreateAffirmation = ({
           )}
         </div>
 
-        {/* Active */}
-        <div className="mb-3">
-          <label>
-            Active
-          </label>
-          <input
-            type="checkbox"
-            name="active"
+        {/* Active (Now Switch) */}
+        <div className="mb-3 ">
+          <label>Active</label><br/>
+          <Switch
             checked={formik.values.active}
-            onChange={() => formik.setFieldValue('active', !formik.values.active)}
+            onChange={(checked) => formik.setFieldValue('active', checked)}
+            style={{
+              backgroundColor: formik.values.active ? '#c56797' : '#d9d9d9',
+            }}
           />
         </div>
 
         {/* Action Buttons */}
         <div className="d-flex justify-content-end mt-3">
-          <button type="button" className="btn btn-light btn-md" onClick={handleCloseModal}>
+          <button
+            type="button"
+            className="btn btn-light btn-md"
+            onClick={handleCloseModal}
+          >
             Close
           </button>
-          <button type="submit" className="btn btn-primary btn-md ms-3" style={{minWidth:'80px'}} disabled={loading}>
-              {loading ? <ClipLoader size={18} color='white' />: initialData ? 'Update' : 'Add'}
+          <button
+            type="submit"
+            className="btn btn-primary btn-md ms-3"
+            style={{ minWidth: '80px' }}
+            disabled={loading}
+          >
+            {loading ? (
+              <ClipLoader size={18} color="white" />
+            ) : initialData ? (
+              'Update'
+            ) : (
+              'Add'
+            )}
           </button>
         </div>
       </form>
@@ -155,7 +174,7 @@ CreateAffirmation.propTypes = {
   handleClose: PropTypes.func.isRequired,
   initialData: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  moodOptions: PropTypes.array, // array of { value: id, label: name }
+  moodOptions: PropTypes.array,
 };
 
 export default CreateAffirmation;

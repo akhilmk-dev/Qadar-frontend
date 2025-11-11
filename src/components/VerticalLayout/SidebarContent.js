@@ -34,6 +34,7 @@ import { HiMiniWindow } from "react-icons/hi2";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { BiBookmarks } from "react-icons/bi";
 import { GiToken } from "react-icons/gi";
+import { FaUserShield } from "react-icons/fa6";
 
 
 
@@ -210,7 +211,7 @@ const SidebarContent = ({ t }) => {
                 <span>{t("Users")}</span>
               </Link>
             </li>}
-            {availablePaths?.includes('/categories') && <li>
+            {(availablePaths?.includes('/categories' || availablePaths?.includes('/createCategory')) )&& <li>
               <Link to="/categories" className="waves-effect" onClick={() => { handleMenuItemClick("/categories"); tToggle2(); }}>
               <BiCategory  size={22} className="me-2 mb-1" />
                 <span>{t("Categories")}</span>
@@ -297,18 +298,17 @@ const SidebarContent = ({ t }) => {
               </Link>
             </li>}
 
+            {availablePaths?.includes('/userPointList')  && <li>
+              <Link to="/userPointList" className="waves-effect" onClick={() => { handleMenuItemClick("/userPointList"); tToggle2(); }}>
+                <FaUserShield size={22} className="me-2" />
+                <span>{t("User Points")}</span>
+              </Link>
+            </li>}
+
             {availablePaths?.includes('/roles')  && <li>
               <Link to="/roles" className="waves-effect" onClick={() => { handleMenuItemClick("/roles"); tToggle2(); }}>
                 <LiaUserEditSolid size={22} className="me-2" />
                 <span>{t("Roles")}</span>
-              </Link>
-            </li>}
-
-            
-            {availablePaths?.includes('/userPointList')  && <li>
-              <Link to="/userPointList" className="waves-effect" onClick={() => { handleMenuItemClick("/userPointList"); tToggle2(); }}>
-                <LiaUserEditSolid size={22} className="me-2" />
-                <span>{t("User Points")}</span>
               </Link>
             </li>}
 

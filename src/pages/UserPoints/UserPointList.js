@@ -5,6 +5,7 @@ import { Button } from 'reactstrap';
 import Breadcrumb from 'components/Common/Breadcrumb2';
 
 import { fetchUserXPPointsRequest  } from 'store/actions'; // adjust to your actual action path
+import UserXPPointsTable from './UserPointTable';
 
 const UserXPPointsList = () => {
   const dispatch = useDispatch();
@@ -13,15 +14,10 @@ const UserXPPointsList = () => {
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState('');
 
-  const { data, total, loading, error } = useSelector(
-    (state) => state.UserXPPoints // adjust according to your reducer name
+  const { userXPPoints,loading,error} = useSelector(
+    (state) => state.UserXpPoint // adjust according to your reducer name
   );
-
-  console.log("data:",data);  
-
-  useEffect(() => {
-    dispatch(fetchUserXPPointsRequest({ page, limit, search }));
-  }, [dispatch, page, limit, search]);
+ 
 
   return (
     <div className="page-content container-fluid">
@@ -38,8 +34,8 @@ const UserXPPointsList = () => {
 
       {/* Table */}
       <UserXPPointsTable
-        data={data || []}
-        totalrows={total}
+        xpPoints={userXPPoints?.data || []}
+        totalrows={userXPPoints?.total}
         loading={loading}
         error={error}
         page={page}

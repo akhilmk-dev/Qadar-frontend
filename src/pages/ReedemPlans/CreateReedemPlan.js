@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 
-const CreateReedemPlan = ({ visible, handleClose, initialData = {}, onSubmit }) => {
+const CreateReedemPlan = ({ visible, handleClose, initialData , onSubmit }) => {
   const loading = useSelector((state) => state.ReedemPlan.loading);
   const formik = useFormik({
     enableReinitialize: true,
@@ -98,7 +98,12 @@ const CreateReedemPlan = ({ visible, handleClose, initialData = {}, onSubmit }) 
             name="tokens"
             placeholder="Enter tokens"
             value={formik.values.tokens}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '' || Number(value) >= 1) {
+                formik.handleChange(e);
+              }
+            }}
             onBlur={formik.handleBlur}
           />
           {formik.touched.tokens && formik.errors.tokens && (

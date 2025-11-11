@@ -63,7 +63,7 @@ function* addCategorySaga(action) {
 function* updateCategorySaga(action) {
   try {
     const response = yield call(updateCategoryApi, action.payload);
-    showSuccess(response?.data?.message);
+    showSuccess("Category updated successfully");
     action.payload.onClose();
     yield put(updateCategorySuccess(response?.data));
   } catch (error) {

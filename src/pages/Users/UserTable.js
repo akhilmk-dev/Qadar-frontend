@@ -50,6 +50,7 @@ const UserTable = ({ users, loading,totalrows ,roles}) => {
     {
       header: "Email",
       accessorKey: "email",
+      showFilter:false
     },
     {
       header: "Phone",

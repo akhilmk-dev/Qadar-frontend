@@ -73,6 +73,7 @@ const RitualTable = ({ rituals, loading, totalrows }) => {
       {
         header: "Recurring Type",
         accessorKey: "recurrenceType",
+        cell: ({ row }) => <span>{row.original.recurrenceType || 'N/A'}</span>,
       },
       {
         header: "Visibility",

@@ -16,7 +16,7 @@ const validationSchema = Yup.object({
 const CreateSubscription = ({
   visible,
   handleClose,
-  initialData = {},
+  initialData = "",
   onSubmit,
   customerOptions = [],
   planOptions = [],

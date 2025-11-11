@@ -1,17 +1,11 @@
 import React from "react";
 
-
-//Email
-
 // Authentication related pages
 import Login from "../pages/Authentication/Login";
 import Logout from "../pages/Authentication/Logout";
 // import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
-import ResetPassword from '../pages/Authentication/ResetPassword';
-
-//  // Inner Authentication
-
+import ResetPassword from '../pages/Authentication/ResetPassword'
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
 // Charts
@@ -19,10 +13,6 @@ import ChartApex from "../pages/Charts/Apexcharts";
 import ChartjsChart from "../pages/Charts/ChartjsChart";
 import EChart from "../pages/Charts/EChart";
 import SparklineChart from "../pages/Charts/SparklineChart";
-
-
-//Ui
-
 //Pages
 import Pages404 from "../pages/Utility/pages-404";
 import Pages500 from "../pages/Utility/pages-500";
@@ -50,7 +40,7 @@ import RitualList from "pages/RitualCalender/RitualList";
 import PaymentLogList from "pages/PaymentLogs/PaymentLogList";
 import UserTokenList from "pages/UserTokens/UserTokenList";
 import UserXPPointsList from "pages/UserPoints/UserPointList";
-
+import CreateCategoryPage from "pages/Categories/CreateCategorie";
 
 const userRoutes = [
   // { path: "/", component: <Navigate to="/dashboard" /> },
@@ -65,7 +55,6 @@ const userRoutes = [
   { path: "/chartjs-charts", component: <ChartjsChart /> },
   { path: "/e-charts", component: <EChart /> },
   { path: "/sparkline-charts", component: <SparklineChart /> },
-
   // this route should be at the end of all other routes
    {path:"/users", component :<UserList />},
    {path:"/plans", component:<PlanList />},
@@ -85,7 +74,8 @@ const userRoutes = [
    {path:"/user-tokens",component:<UserTokenList />},
    {path:"/paymentlogs",component:<PaymentLogList />},
    {path:'/customerDetails/:id', component:<CustomerDetails />},
-   {path:'/userPointList', component:<UserXPPointsList/>}
+   {path:'/userPointList', component:<UserXPPointsList/>},
+   {path:"/createCategory",component:<CreateCategoryPage />}
 ];
 
 const authRoutes = [

@@ -57,6 +57,7 @@ import Ritual from "./RitualCalendar/reducer"
 import PaymentLog from "./PaymentLogs/reducer"
 import PaymentLogDataTable from "components/TableContainers/PaymentLogDataTable"
 import UserToken from "./UserTokens/reducer"
+import UserXpPoint from "./UserPoints/reducer"
 
 const rootReducer = combineReducers({
   Layout,
@@ -80,7 +81,8 @@ const rootReducer = combineReducers({
   RedeemSubscription,
   Ritual,
   PaymentLog,
-  UserToken
+  UserToken,
+  UserXpPoint
 })
 
 export default rootReducer

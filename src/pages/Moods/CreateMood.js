@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { ClipLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 
-const CreateMood = ({ visible, handleClose, initialData = {}, onSubmit }) => {
+const CreateMood = ({ visible, handleClose, initialData ="", onSubmit }) => {
   const loading = useSelector((state) => state.Mood.loading);
 
   const formik = useFormik({

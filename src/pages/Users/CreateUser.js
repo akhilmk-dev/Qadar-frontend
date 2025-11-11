@@ -21,6 +21,7 @@ const CreateUser = ({ visible, handleClose, initialData = '', onSubmit, roles = 
       phone: initialData?.phone || '',
       password: '',
       role: initialData?.role?._id || '',
+      status:initialData?.status 
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
@@ -39,6 +40,7 @@ const CreateUser = ({ visible, handleClose, initialData = '', onSubmit, roles = 
         email: values.email,
         phone: values.phone,
         role: values.role,
+        status:values?.status
       };
 
       if (!initialData) {
@@ -50,11 +52,11 @@ const CreateUser = ({ visible, handleClose, initialData = '', onSubmit, roles = 
     },
   });
 
-  useEffect(()=>{
-    if(initialData){
-        formik.setFieldValue('role',initialData?.role?._id)
+  useEffect(() => {
+    if (initialData) {
+      formik.setFieldValue('role', initialData?.role?._id)
     }
-  },[initialData,roles])
+  }, [initialData, roles])
 
   const onClose = () => {
     formik.resetForm();
@@ -169,24 +171,38 @@ const CreateUser = ({ visible, handleClose, initialData = '', onSubmit, roles = 
               </label>
               <Select
                 placeholder="Select role"
-                options={roles?.map(item=>({label:item?.role_name,value:item?._id}))}
+                options={roles?.map(item => ({ label: item?.role_name, value: item?._id }))}
                 className="w-100"
                 value={
-                    roles
-                      ?.map(item => ({
-                        label: item?.role_name,
-                        value: item?._id
-                      }))
-                      ?.find(option => option.value === formik.values.role) || null
-                  }
-                  
-                onChange={(option) => formik.setFieldValue('role', option?.value ||"")}
+                  roles
+                    ?.map(item => ({
+                      label: item?.role_name,
+                      value: item?._id
+                    }))
+                    ?.find(option => option.value === formik.values.role) || null
+                }
+
+                onChange={(option) => formik.setFieldValue('role', option?.value || "")}
                 isClearable={true}
               />
               {formik.touched.role && formik.errors.role && (
                 <span style={{ color: 'red' }}>{formik.errors.role}</span>
               )}
             </div>
+            {/* Switch */}
+            <div className="d-flex align-items-center mb-4">
+              <label className="me-3 fw-semibold mb-0 modal-form">status</label>
+              <Switch
+                checked={formik.values.status}
+                onChange={(checked) =>
+                  formik.setFieldValue("status", checked)
+                }
+                style={{
+                  backgroundColor: formik.values.status ? "#c56797" : "gray"
+                }}
+              />
+            </div>
+
           </div>
 
           {/* Footer */}
@@ -194,9 +210,9 @@ const CreateUser = ({ visible, handleClose, initialData = '', onSubmit, roles = 
             <button type="button" className="btn btn-light btn-md" onClick={onClose}>
               Close
             </button>
-          <button type="submit" className="btn btn-primary btn-md ms-3" style={{minWidth:'80px'}} disabled={loading}>
-              {loading ? <ClipLoader size={18} color='white' />: initialData?._id ? 'Update' : 'Add'}
-          </button>
+            <button type="submit" className="btn btn-primary btn-md ms-3" style={{ minWidth: '80px' }} disabled={loading}>
+              {loading ? <ClipLoader size={18} color='white' /> : initialData?._id ? 'Update' : 'Add'}
+            </button>
           </div>
         </div>
       </form>

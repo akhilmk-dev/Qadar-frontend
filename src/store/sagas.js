@@ -23,6 +23,7 @@ import RedeemSubscriptionSaga from "./RedeemSubscriptions/saga"
 import RitualCalendarSaga from "./RitualCalendar/saga"
 import PaymentLogSaga from "./PaymentLogs/saga"
 import userTokenSaga from "./UserTokens/saga"
+import userPointsSaga from "./UserPoints/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -48,6 +49,7 @@ export default function* rootSaga() {
     RedeemSubscriptionSaga(),
     RitualCalendarSaga(),
     PaymentLogSaga(),
-    userTokenSaga()
+    userTokenSaga(),
+    userPointsSaga()
   ])
 }

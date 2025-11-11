@@ -5,11 +5,11 @@ import { Button } from "reactstrap";
 import ConfirmationModal from "components/Modals/ConfirmationModal";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import UserXPPointsDataTable from "components/TableContainers/UserXPPointsDataTable"; // similar to your RedeemSubscriptionDataTable
 import {
   deleteUserXPPointsRequest,
   updateUserXPPointsRequest,
 } from "store/actions"; // adjust the paths to your actual store
+import UserXPPointsDataTable from "components/TableContainers/UserXPPointsDataTable";
 
 const UserXPPointsTable = ({ xpPoints = [], loading, totalrows }) => {
   const dispatch = useDispatch();
@@ -27,48 +27,55 @@ const UserXPPointsTable = ({ xpPoints = [], loading, totalrows }) => {
   const [searchString, setSearchString] = useState("");
 
   // Get permissions (if you have them)
-  const permissions = JSON.parse(localStorage.getItem("permissions"));
-  const hasEditPermission = permissions?.some(
-    (item) => item?.permission_name === "XP Points Edit"
-  );
-  const hasDeletePermission = permissions?.some(
-    (item) => item?.permission_name === "XP Points Delete"
-  );
+  // const permissions = JSON.parse(localStorage.getItem("permissions"));
+  // const hasEditPermission = permissions?.some(
+  //   (item) => item?.permission_name === "XP Points Edit"
+  // );
+  // const hasDeletePermission = permissions?.some(
+  //   (item) => item?.permission_name === "XP Points Delete"
+  // );
 
   // Handle delete confirmation
-  const handleDeleteConfirmed = (id) => {
-    dispatch(deleteUserXPPointsRequest(id));
-    setOpenModal(false);
-    setConfirmAction(false);
-  };
+  // const handleDeleteConfirmed = (id) => {
+  //   dispatch(deleteUserXPPointsRequest(id));
+  //   setOpenModal(false);
+  //   setConfirmAction(false);
+  // };
 
-  React.useEffect(() => {
-    if (deleteId && confirmAction) {
-      handleDeleteConfirmed(deleteId);
-    }
-  }, [confirmAction]);
+  // React.useEffect(() => {
+  //   if (deleteId && confirmAction) {
+  //     handleDeleteConfirmed(deleteId);
+  //   }
+  // }, [confirmAction]);
 
   // Table columns
   const columns = useMemo(
     () => [
       {
+        id: "customerName",
         header: "Customer Name",
         accessorKey: "customer.name",
         cell: ({ row }) => <span>{row.original.customer?.name || "—"}</span>,
       },
       {
+        id: "email",
         header: "Email",
         accessorKey: "customer.email",
+        showFilter:false,
         cell: ({ row }) => <span>{row.original.customer?.email || "—"}</span>,
       },
       {
+        id: "phone",
         header: "Phone",
         accessorKey: "customer.phone",
+        showFilter:false,
         cell: ({ row }) => <span>{row.original.customer?.phone || "—"}</span>,
       },
       {
+        id: "remarks",
         header: "Remarks",
         accessorKey: "remarks",
+        showFilter:false,
         cell: ({ row }) => (
           <span
             title={row.original.remarks}
@@ -85,11 +92,13 @@ const UserXPPointsTable = ({ xpPoints = [], loading, totalrows }) => {
         ),
       },
       {
+        id: "totalXP",
         header: "Total XP",
         accessorKey: "totalXP",
         cell: ({ row }) => <span>{row.original.totalXP || 0}</span>,
       },
       {
+        id: "joinedOn",
         header: "Joined On",
         accessorKey: "customer.createdAt",
         cell: ({ row }) => (
@@ -100,57 +109,15 @@ const UserXPPointsTable = ({ xpPoints = [], loading, totalrows }) => {
           </span>
         ),
       },
-      // Optional Actions
-      ...(hasEditPermission || hasDeletePermission
-        ? [
-            {
-              header: "Actions",
-              id: "actions",
-              cell: ({ row }) => {
-                const handleEdit = () => {
-                  setEditData(row.original);
-                  setIsOpen(true);
-                };
-
-                const handleDelete = () => {
-                  setDeleteId(row.original._id);
-                  setOpenModal(true);
-                };
-
-                return (
-                  <div className="d-flex gap-2">
-                    {hasEditPermission && (
-                      <Button
-                        color="primary"
-                        title="Edit"
-                        onClick={handleEdit}
-                      >
-                        <FaRegEdit size={18} />
-                      </Button>
-                    )}
-                    {hasDeletePermission && (
-                      <Button
-                        color="danger"
-                        title="Delete"
-                        onClick={handleDelete}
-                      >
-                        <MdDeleteOutline size={18} />
-                      </Button>
-                    )}
-                  </div>
-                );
-              },
-            },
-          ]
-        : []),
     ],
-    [hasEditPermission, hasDeletePermission]
+    []
   );
+  
 
-  const handleFormSubmit = (id, data, onClose) => {
-    dispatch(updateUserXPPointsRequest(id, data));
-    if (onClose) onClose();
-  };
+  // const handleFormSubmit = (id, data, onClose) => {
+  //   dispatch(updateUserXPPointsRequest(id, data));
+  //   if (onClose) onClose();
+  // };
 
   return (
     <>

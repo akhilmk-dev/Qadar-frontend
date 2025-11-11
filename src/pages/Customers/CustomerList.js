@@ -14,9 +14,7 @@ const CustomerList = () => {
   const loading = useSelector((state) => state.Customer.loading);
   const error = useSelector((state) => state.Customer.error);
   const permissions  =  JSON.parse(localStorage.getItem('permissions'));
-  
   const hasAddPermission = permissions?.some(item=> item?.permission_name == "Customer Add")
-
   const handleSubmit = (data, onClose) => {
     dispatch(addCustomerRequest(data, onClose));
   };
@@ -44,7 +42,7 @@ const CustomerList = () => {
               { title: 'Customers', link: '#' }
             ]}
           />
-      {/* {hasAddPermission && <Button
+         {/* {hasAddPermission && <Button
             className="bg-primary text-white d-flex justify-content-center gap-1 align-items-center"
             onClick={() => setIsOpen(true)}
           >

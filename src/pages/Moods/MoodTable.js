@@ -64,7 +64,7 @@ const MoodTable = ({ moods, loading, totalrows }) => {
       },
       {
         header: "Created At",
-        accessorKey: "created_at",
+        accessorKey: "createdAt",
         cell: ({ row }) => (
           <span>{formatISOToDDMMYYYY(row.original.createdAt)}</span>
         ),

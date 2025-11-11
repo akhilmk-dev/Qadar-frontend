@@ -47,12 +47,13 @@ const CustomerTable = ({ customers, loading, totalrows }) => {
       header: "Name",
       accessorKey: "name",
       cell:({row})=>(
-        <span onClick={()=>navigate(`/customerDetails/${row.original?._id}`)}>{row.original?.name}</span>
+        <span style={{color:"#c56797",cursor:"pointer"}} onClick={()=>navigate(`/customerDetails/${row.original?._id}`)}>{row.original?.name}</span>
       )
     },
     {
       header: "Email",
       accessorKey: "email",
+      showFilter:false,
     },
     {
         header: "Date of birth",
@@ -64,6 +65,30 @@ const CustomerTable = ({ customers, loading, totalrows }) => {
     {
       header: "Phone",
       accessorKey: "phone",
+      showFilter:false,
+    },
+    {
+      header: "Gender",
+      accessorKey: "gender",
+      cell:({row})=>(
+        <span>{row?.original?.gender || 'N/A'}</span>
+  )
+    },
+    {
+      header:'Relationship status',
+      accessorKey:'relationship_status',
+      showFilter:false,
+      cell:({row})=>(
+        <span>{row?.original?.relationship_status || 'N/A'}</span>
+      )
+    },
+    {
+      header:"Work status",
+      accessorKey:'work_status',
+      showFilter:false,
+      cell:({row})=>(
+        <span>{row?.original?.work_status || 'N/A'}</span>
+      )
     },
     {
       header: "Created At",

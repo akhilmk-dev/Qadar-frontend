@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 const CreateCategoryPlan = ({
   visible,
   handleClose,
-  initialData = {},
+  initialData = "",
   onSubmit,
   planOptions = [],
   categoryOptions = [],
