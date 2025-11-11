@@ -310,7 +310,14 @@ const SidebarContent = ({ t }) => {
                 <LiaUserEditSolid size={22} className="me-2" />
                 <span>{t("Roles")}</span>
               </Link>
+            </li>}            {availablePaths?.includes('/cmspages')  && <li>
+              <Link to="/cmspages" className="waves-effect" onClick={() => { handleMenuItemClick("/cms-page"); tToggle2(); }}>
+                <LiaUserEditSolid size={22} className="me-2" />
+                <span>{t("CMS page")}</span>
+              </Link>
             </li>}
+
+
 
           </ul>
         </div>

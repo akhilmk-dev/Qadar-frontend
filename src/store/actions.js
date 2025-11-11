@@ -55,3 +55,5 @@ export * from "./PaymentLogs/actions"
 export * from "./UserTokens/actions"
 
 export * from "./UserPoints/actions"
+
+export * from "./Cms/actions"

@@ -41,6 +41,7 @@ import PaymentLogList from "pages/PaymentLogs/PaymentLogList";
 import UserTokenList from "pages/UserTokens/UserTokenList";
 import UserXPPointsList from "pages/UserPoints/UserPointList";
 import CreateCategoryPage from "pages/Categories/CreateCategorie";
+import CmsList from "pages/CMSpage/cmsList";
 
 const userRoutes = [
   // { path: "/", component: <Navigate to="/dashboard" /> },
@@ -75,7 +76,8 @@ const userRoutes = [
    {path:"/paymentlogs",component:<PaymentLogList />},
    {path:'/customerDetails/:id', component:<CustomerDetails />},
    {path:'/userPointList', component:<UserXPPointsList/>},
-   {path:"/createCategory",component:<CreateCategoryPage />}
+   {path:"/createCategory",component:<CreateCategoryPage />},
+   {path:"/cmspages", component:<CmsList/>}
 ];
 
 const authRoutes = [

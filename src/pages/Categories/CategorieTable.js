@@ -36,20 +36,38 @@ const CategoryTable = ({ categories, loading, totalrows, onEdit }) => {
     }
   }, [confirmAction]);
 
-  const columns = useMemo(
-    () => [
-      { header: "Category Name", accessorKey: "category_name" },
-      { header: "AI Model", accessorKey: "ai_model" },
-      { header: "Tokens", accessorKey: "tokens" },
-      {
-        header: "Created At",
-        accessorKey: "createdAt",
-        cell: ({ row }) => (
-          <span>{formatISOToDDMMYYYY(row.original.createdAt)}</span>
-        ),
-      },
-      ...(hasEditPermission || hasDeletePermission
-        ? [
+const columns = useMemo(
+  () => [
+    {
+      header: "Category Name",
+      accessorKey: "category_name",
+      cell: ({ getValue }) => getValue() || "N/A",
+    },
+    {
+      header: "Category Name (ar)",
+      accessorKey: "category_name_ar",
+      cell: ({ getValue }) => getValue() || "N/A",
+    },
+    {
+      header: "AI Model",
+      accessorKey: "ai_model",
+      cell: ({ getValue }) => getValue() || "N/A",
+    },
+    {
+      header: "Tokens",
+      accessorKey: "tokens",
+      cell: ({ getValue }) => getValue() || "N/A",
+    },
+    {
+      header: "Created At",
+      accessorKey: "createdAt",
+      cell: ({ row }) =>
+        row.original.createdAt
+          ? formatISOToDDMMYYYY(row.original.createdAt)
+          : "N/A",
+    },
+    ...(hasEditPermission || hasDeletePermission
+      ? [
           {
             header: "Actions",
             id: "actions",
@@ -85,10 +103,11 @@ const CategoryTable = ({ categories, loading, totalrows, onEdit }) => {
             },
           },
         ]
-        : []),
-    ],
-    [hasEditPermission, hasDeletePermission]
-  );
+      : []),
+  ],
+  [hasEditPermission, hasDeletePermission]
+);
+
 
   return (
     <>

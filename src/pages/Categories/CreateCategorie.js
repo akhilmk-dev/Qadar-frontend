@@ -26,6 +26,9 @@ const CategoryFormPage = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewThumbnail, setPreviewThumbnail] = useState("");
 
+  const [backendErrors, setBackendErrors] = useState({});
+
+
   // Fetch existing category when editing
   useEffect(() => {
     if (id) {
@@ -49,7 +52,9 @@ const CategoryFormPage = () => {
     enableReinitialize: true,
     initialValues: {
       category_name: initialData?.category_name || "",
+      category_name_ar:initialData?.category_name_ar || "",
       category_image: initialData?.category_image || "",
+      category_image_ar: initialData?.category_image_ar || "",
       thumbnail_image: initialData?.thumbnail_image || "",
       ai_model: initialData?.ai_model || "",
       prompt: initialData?.prompt || "",
@@ -57,12 +62,20 @@ const CategoryFormPage = () => {
       xp_points: initialData?.xp_points || "",
       isImageRequired: initialData?.isImageRequired || false,
       instructions: initialData?.instructions || "",
+      instructions_ar: initialData?.instructions_ar || "",
+
     },
     validationSchema: Yup.object({
       category_name: Yup.string().required("Category name is required"),
+       category_name_ar: Yup.string().required("Category name in arabic is required"),
       category_image: !initialData
         ? Yup.string().required("Category image is required")
         : Yup.string(),
+      
+      category_image_ar: !initialData
+        ? Yup.string().required("Category image is required")
+        : Yup.string(),
+      
       thumbnail_image: !initialData
         ? Yup.string().required("Thumbnail image is required")
         : Yup.string(),
@@ -75,6 +88,8 @@ const CategoryFormPage = () => {
         .typeError("XP points must be a number")
         .required("XP points is required"),
       instructions: Yup.string().required("Instructions are required"),
+      instructions_ar: Yup.string().required("Instructions are required")
+
     }),
     onSubmit: async (values,{ resetForm }) => {
       try {
@@ -82,6 +97,9 @@ const CategoryFormPage = () => {
           resetForm();
           navigate('/categories');
         }
+
+        setBackendErrors({});
+
           if(initialData){
             dispatch(updateCategoryRequest(id,JSON.stringify(values),onClose))
           }else{
@@ -89,10 +107,22 @@ const CategoryFormPage = () => {
           }
       } catch (err) {
         console.error("Error saving category:", err);
+
+        const backendData=err.response?.data
+
+        if(backendData?.errors){
+          const formattedErrors={};
+
+          Object.keys(backendData.errors).forEach((key)=>{
+            formattedErrors[key] = backendData.errors[key][0];
+          })
+           setErrors(formattedErrors);
+      setBackendErrors(formattedErrors);
+        }
       }
     },
   });
-
+  
   const handleImageChange = (e, field, setPreview) => {
     const file = e.target.files[0];
     if (file) {
@@ -146,6 +176,109 @@ const CategoryFormPage = () => {
             />
             {formik.touched.category_name && formik.errors.category_name && (
               <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_name}</small>
+            )}
+          </div>
+
+                    {/* Category Name Ar */}
+          <div className="col-md-6 mb-3">
+            <label className="form-label">
+              Category Name (ar) <span className="text-danger" style={{fontSize:"14px"}}>*</span>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="category_name_ar"
+              value={formik.values.category_name_ar}
+              onChange={formik.handleChange}
+              placeholder = "Enter category name in arabic"
+            />
+            {formik.touched.category_name && formik.errors.category_name_ar && (
+              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_name_ar}</small>
+            )}
+          </div>
+
+        {/* Category Image */}
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label className="form-label">
+              Category Image {!id && <span className="text-danger" style={{fontSize:"14px"}}>*</span>}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={(e) => handleImageChange(e, "category_image", setPreviewImage)}
+            />
+             {formik.touched.category_image && formik.errors.category_image && (
+              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_image}</small>
+            )}
+            {initialData?.category_image && (
+              <button
+                type="button"
+                className="btn btn-link p-0 mt-1"
+                onClick={() => window.open(initialData?.category_image, "_blank")}
+                style={{ color: "#c56797" }}
+              >
+                View Existing Image
+              </button>
+            )}
+          </div>
+
+                    {/* category image ar */}
+
+                    <div className="col-md-6 mb-3">
+            <label className="form-label">
+              Category Image (ar) {!id && <span className="text-danger" style={{fontSize:"14px"}}>*</span>}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={(e) => handleImageChange(e, "category_image_ar", setPreviewImage)}
+            />
+             {formik.touched.category_image_ar && formik.errors.category_image_ar && (
+              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_image_ar}</small>
+            )}
+            {initialData?.category_image && (
+              <button
+                type="button"
+                className="btn btn-link p-0 mt-1"
+                onClick={() => window.open(initialData?.category_image_ar, "_blank")}
+                style={{ color: "#c56797" }}
+              >
+                View Existing Image
+              </button>
+            )}
+          </div>
+          
+
+
+        </div>
+
+           {/* thumbnail image */}
+
+          <div className="col-md-6 mb-3">
+            <label className="form-label">
+              Thumbnail Image {!id && <span className="text-danger" style={{fontSize:"14px"}}>*</span>}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={(e) => handleImageChange(e, "thumbnail_image", setPreviewThumbnail)}
+            />
+             {formik.touched.thumbnail_image && formik.errors.thumbnail_image && (
+              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.thumbnail_image}</small>
+            )}
+            {initialData?.thumbnail_image && (
+              <button
+                type="button"
+                className="btn btn-link p-0 mt-1"
+                onClick={() => window.open(initialData?.thumbnail_image, "_blank")}
+                style={{ color: "#c56797" }}
+              >
+                View Existing Image
+              </button>
             )}
           </div>
 
@@ -204,58 +337,7 @@ const CategoryFormPage = () => {
           </div>
         </div>
 
-        {/* Category Image & Thumbnail in two columns */}
-        <div className="row">
-          <div className="col-md-6 mb-3">
-            <label className="form-label">
-              Category Image {!id && <span className="text-danger" style={{fontSize:"14px"}}>*</span>}
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              className="form-control"
-              onChange={(e) => handleImageChange(e, "category_image", setPreviewImage)}
-            />
-             {formik.touched.category_image && formik.errors.category_image && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_image}</small>
-            )}
-            {initialData?.category_image && (
-              <button
-                type="button"
-                className="btn btn-link p-0 mt-1"
-                onClick={() => window.open(initialData?.category_image, "_blank")}
-                style={{ color: "#c56797" }}
-              >
-                View Existing Image
-              </button>
-            )}
-          </div>
 
-          <div className="col-md-6 mb-3">
-            <label className="form-label">
-              Thumbnail Image {!id && <span className="text-danger" style={{fontSize:"14px"}}>*</span>}
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              className="form-control"
-              onChange={(e) => handleImageChange(e, "thumbnail_image", setPreviewThumbnail)}
-            />
-             {formik.touched.thumbnail_image && formik.errors.thumbnail_image && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.thumbnail_image}</small>
-            )}
-            {initialData?.thumbnail_image && (
-              <button
-                type="button"
-                className="btn btn-link p-0 mt-1"
-                onClick={() => window.open(initialData?.thumbnail_image, "_blank")}
-                style={{ color: "#c56797" }}
-              >
-                View Existing Image
-              </button>
-            )}
-          </div>
-        </div>
 
         {/* Full-width fields */}
         <div className="mb-3">
@@ -291,6 +373,34 @@ const CategoryFormPage = () => {
             <div className="mt-3 p-3 border rounded bg-light">
               <h6>Preview:</h6>
               <ReactMarkdown>{formik.values.instructions}</ReactMarkdown>
+            </div>
+          )}
+          {formik.touched.instructions && formik.errors.instructions && (
+              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.instructions}</small>
+            )}
+        </div>
+
+        
+
+        {/* instructions ar */}
+
+
+        <div className="mb-3">
+          <label className="form-label">
+            Instructions (Markdown ar) <span className="text-danger" style={{fontSize:"14px"}}>*</span>
+          </label>
+          <textarea
+            className="form-control"
+            name="instructions_ar"
+            rows={6}
+            placeholder="Enter markdown content..."
+            value={formik.values.instructions_ar}
+            onChange={formik.handleChange}
+          />
+          {(formik.values.instructions) && (
+            <div className="mt-3 p-3 border rounded bg-light">
+              <h6>Preview:</h6>
+              <ReactMarkdown>{formik.values.instructions_ar}</ReactMarkdown>
             </div>
           )}
           {formik.touched.instructions && formik.errors.instructions && (

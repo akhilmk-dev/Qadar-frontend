@@ -53,6 +53,8 @@ import RedeemSubscription from "./RedeemSubscriptions/reducer"
 // ritual calendar 
 import Ritual from "./RitualCalendar/reducer"
 
+import cmsReducer from "./Cms/reducer"
+
 // payment logs
 import PaymentLog from "./PaymentLogs/reducer"
 import PaymentLogDataTable from "components/TableContainers/PaymentLogDataTable"
@@ -82,7 +84,8 @@ const rootReducer = combineReducers({
   Ritual,
   PaymentLog,
   UserToken,
-  UserXpPoint
+  UserXpPoint,
+  Cms:cmsReducer
 })
 
 export default rootReducer
