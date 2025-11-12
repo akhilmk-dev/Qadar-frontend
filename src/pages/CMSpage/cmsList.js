@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { useNavigate } from "react-router-dom";
@@ -16,11 +16,18 @@ const CmsList = () => {
 
   const permissions = JSON.parse(localStorage.getItem("permissions"));
   const hasAddPermission = permissions?.some(
-    (item) => item?.permission_name === "CMS Add"
+    (item) => item?.permission_name === "CMS Page Add"
   );
 
   const handleAddNew = () => navigate("/createCms");
   const handleEdit = (id) => navigate(`/createCms?id=${id}`);
+
+  //  Fetch data on mount
+  useEffect(() => {
+    const params = { page: 0, limit: 10 };
+    console.log(" Dispatching fetchCmsRequest:", params);
+    dispatch(fetchCmsRequest(params));
+  }, [dispatch]);
 
   return (
     <div className="page-content container-fluid">
@@ -32,6 +39,7 @@ const CmsList = () => {
             { title: "CMS Pages", link: "#" },
           ]}
         />
+
         {hasAddPermission && (
           <Button
             className="bg-primary text-white d-flex justify-content-center gap-1 align-items-center"

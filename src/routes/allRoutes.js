@@ -42,6 +42,7 @@ import UserTokenList from "pages/UserTokens/UserTokenList";
 import UserXPPointsList from "pages/UserPoints/UserPointList";
 import CreateCategoryPage from "pages/Categories/CreateCategorie";
 import CmsList from "pages/CMSpage/cmsList";
+import CmsFormPage from "pages/CMSpage/createCms";
 
 const userRoutes = [
   // { path: "/", component: <Navigate to="/dashboard" /> },
@@ -77,7 +78,8 @@ const userRoutes = [
    {path:'/customerDetails/:id', component:<CustomerDetails />},
    {path:'/userPointList', component:<UserXPPointsList/>},
    {path:"/createCategory",component:<CreateCategoryPage />},
-   {path:"/cmspages", component:<CmsList/>}
+  //  {path:"/cmspages", component:<CmsList/>},
+  //  {path:"/cmspages/create", component:<CmsFormPage/>}
 ];
 
 const authRoutes = [

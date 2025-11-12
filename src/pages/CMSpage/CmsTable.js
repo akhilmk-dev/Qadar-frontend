@@ -1,15 +1,28 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Button } from "reactstrap";
 import CategoryDataTable from "components/TableContainers/CategoryDataTable"; // reuse
 import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
 const CmsTable = ({ cmsPages, loading, totalrows, onEdit }) => {
+  const dispatch = useDispatch();
+
+  //  Pagination, sorting, and search states (required for the DataTable)
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [searchString, setSearchString] = useState("");
+  const [selectedSortData, setSelectedSortData] = useState({
+    value: "createdAt",
+    direction: "desc",
+  });
+
+  //  Permissions (use the correct permission names)
   const permissions = JSON.parse(localStorage.getItem("permissions"));
   const hasEditPermission = permissions?.some(
-    (item) => item?.permission_name === "CMS Edit"
+    (item) => item?.permission_name === "CMS Page Edit"
   );
 
+  //  Table Columns
   const columns = useMemo(
     () => [
       {
@@ -41,6 +54,7 @@ const CmsTable = ({ cmsPages, loading, totalrows, onEdit }) => {
     [hasEditPermission]
   );
 
+  //  Return DataTable with required pagination props
   return (
     <CategoryDataTable
       columns={columns}
@@ -48,6 +62,14 @@ const CmsTable = ({ cmsPages, loading, totalrows, onEdit }) => {
       data={cmsPages || []}
       isGlobalFilter
       isPagination
+      selectedSortData={selectedSortData}
+      setSelectedSortData={setSelectedSortData}
+      pageIndex={pageIndex}
+      setPageIndex={setPageIndex}
+      pageSize={pageSize}
+      setPageSize={setPageSize}
+      searchString={searchString}
+      setSearchString={setSearchString}
       SearchPlaceholder="Search CMS Pages..."
       pagination="pagination"
       docName="CMS Pages"

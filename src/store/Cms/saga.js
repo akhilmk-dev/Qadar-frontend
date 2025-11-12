@@ -16,9 +16,12 @@ const fetchCmsApi = async (params) => {
 // Saga
 function* fetchCmsSaga(action) {
   try {
+   
     const response = yield call(fetchCmsApi, action.payload);
+  
     yield put(fetchCmsSuccess(response.data));
   } catch (error) {
+    
     yield put(fetchCmsFailure(error.message));
   }
 }

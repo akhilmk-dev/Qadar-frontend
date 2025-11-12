@@ -91,7 +91,7 @@ const CategoryFormPage = () => {
       instructions_ar: Yup.string().required("Instructions are required")
 
     }),
-    onSubmit: async (values,{ resetForm }) => {
+    onSubmit: async (values,{ resetForm,setErrors }) => {
       try {
         const onClose = ()=>{
           resetForm();
@@ -105,6 +105,9 @@ const CategoryFormPage = () => {
           }else{
             dispatch(addCategoryRequest(JSON.stringify(values),onClose))
           }
+
+
+
       } catch (err) {
         console.error("Error saving category:", err);
 
@@ -174,9 +177,11 @@ const CategoryFormPage = () => {
               onChange={formik.handleChange}
               placeholder = "Enter category name"
             />
-            {formik.touched.category_name && formik.errors.category_name && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_name}</small>
-            )}
+{(formik.touched.category_name && formik.errors.category_name) || backendErrors.category_name ? (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.category_name || backendErrors.category_name}
+  </small>
+) : null}
           </div>
 
                     {/* Category Name Ar */}
@@ -192,9 +197,13 @@ const CategoryFormPage = () => {
               onChange={formik.handleChange}
               placeholder = "Enter category name in arabic"
             />
-            {formik.touched.category_name && formik.errors.category_name_ar && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_name_ar}</small>
-            )}
+{(formik.touched.category_name_ar || backendErrors.category_name_ar) &&
+ (formik.errors.category_name_ar || backendErrors.category_name_ar) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.category_name_ar || backendErrors.category_name_ar}
+  </small>
+)}
+
           </div>
 
         {/* Category Image */}
@@ -209,9 +218,13 @@ const CategoryFormPage = () => {
               className="form-control"
               onChange={(e) => handleImageChange(e, "category_image", setPreviewImage)}
             />
-             {formik.touched.category_image && formik.errors.category_image && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_image}</small>
-            )}
+{(formik.touched.category_image || backendErrors.category_image) &&
+ (formik.errors.category_image || backendErrors.category_image) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.category_image || backendErrors.category_image}
+  </small>
+)}
+
             {initialData?.category_image && (
               <button
                 type="button"
@@ -236,9 +249,13 @@ const CategoryFormPage = () => {
               className="form-control"
               onChange={(e) => handleImageChange(e, "category_image_ar", setPreviewImage)}
             />
-             {formik.touched.category_image_ar && formik.errors.category_image_ar && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.category_image_ar}</small>
-            )}
+{(formik.touched.category_image_ar || backendErrors.category_image_ar) &&
+ (formik.errors.category_image_ar || backendErrors.category_image_ar) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.category_image_ar || backendErrors.category_image_ar}
+  </small>
+)}
+
             {initialData?.category_image && (
               <button
                 type="button"
@@ -267,9 +284,13 @@ const CategoryFormPage = () => {
               className="form-control"
               onChange={(e) => handleImageChange(e, "thumbnail_image", setPreviewThumbnail)}
             />
-             {formik.touched.thumbnail_image && formik.errors.thumbnail_image && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.thumbnail_image}</small>
-            )}
+{(formik.touched.thumbnail_image || backendErrors.thumbnail_image) &&
+ (formik.errors.thumbnail_image || backendErrors.thumbnail_image) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.thumbnail_image || backendErrors.thumbnail_image}
+  </small>
+)}
+
             {initialData?.thumbnail_image && (
               <button
                 type="button"
@@ -295,9 +316,13 @@ const CategoryFormPage = () => {
               onChange={formik.handleChange}
               placeholder = "Enter Ai model"
             />
-            {formik.touched.ai_model && formik.errors.ai_model && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.ai_model}</small>
-            )}
+{(formik.touched.ai_model || backendErrors.ai_model) &&
+ (formik.errors.ai_model || backendErrors.ai_model) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.ai_model || backendErrors.ai_model}
+  </small>
+)}
+
           </div>
 
           {/* Tokens */}
@@ -313,9 +338,13 @@ const CategoryFormPage = () => {
               onChange={formik.handleChange}
               placeholder="Enter tokens"
             />
-             {formik.touched.tokens && formik.errors.tokens && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.tokens}</small>
-            )}
+{(formik.touched.tokens || backendErrors.tokens) &&
+ (formik.errors.tokens || backendErrors.tokens) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.tokens || backendErrors.tokens}
+  </small>
+)}
+
           </div>
 
           {/* XP Points */}
@@ -331,9 +360,13 @@ const CategoryFormPage = () => {
               onChange={formik.handleChange}
               placeholder="Enter xp points"
             />
-             {formik.touched.xp_points && formik.errors.xp_points && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.xp_points}</small>
-            )}
+{(formik.touched.xp_points || backendErrors.xp_points) &&
+ (formik.errors.xp_points || backendErrors.xp_points) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.xp_points || backendErrors.xp_points}
+  </small>
+)}
+
           </div>
         </div>
 
@@ -352,9 +385,13 @@ const CategoryFormPage = () => {
             onChange={formik.handleChange}
             placeholder="Enter the prompt"
           />
-           {formik.touched.prompt && formik.errors.prompt && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.prompt}</small>
-            )}
+{(formik.touched.prompt || backendErrors.prompt) &&
+ (formik.errors.prompt || backendErrors.prompt) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.prompt || backendErrors.prompt}
+  </small>
+)}
+
         </div>
 
         <div className="mb-3">
@@ -375,9 +412,13 @@ const CategoryFormPage = () => {
               <ReactMarkdown>{formik.values.instructions}</ReactMarkdown>
             </div>
           )}
-          {formik.touched.instructions && formik.errors.instructions && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.instructions}</small>
-            )}
+{(formik.touched.instructions || backendErrors.instructions) &&
+ (formik.errors.instructions || backendErrors.instructions) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.instructions || backendErrors.instructions}
+  </small>
+)}
+
         </div>
 
         
@@ -403,9 +444,13 @@ const CategoryFormPage = () => {
               <ReactMarkdown>{formik.values.instructions_ar}</ReactMarkdown>
             </div>
           )}
-          {formik.touched.instructions && formik.errors.instructions && (
-              <small className="text-danger" style={{fontSize:"14px"}}>{formik.errors.instructions}</small>
-            )}
+{(formik.touched.instructions_ar || backendErrors.instructions_ar) &&
+ (formik.errors.instructions_ar || backendErrors.instructions_ar) && (
+  <small className="text-danger" style={{ fontSize: "14px" }}>
+    {formik.errors.instructions_ar || backendErrors.instructions_ar}
+  </small>
+)}
+
         </div>
 
         {/* Switch */}
