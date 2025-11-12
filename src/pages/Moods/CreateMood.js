@@ -13,11 +13,15 @@ const CreateMood = ({ visible, handleClose, initialData ="", onSubmit }) => {
     enableReinitialize: true,
     initialValues: {
       mood_name: initialData?.mood_name || '',
+      mood_name_ar:initialData?.mood_name_ar ||'',
       description: initialData?.description || '',
+      description_ar:initialData?.description_ar || ''
     },
     validationSchema: Yup.object({
       mood_name: Yup.string().required('Mood name is required'),
+      mood_name_ar:Yup.string().required('Mood name in arabic is required'),
       description: Yup.string().required('Mood description is required'),
+      description_ar: Yup.string().required('Mood description in arabic is required'),
     }),
     onSubmit: (values, { resetForm }) => {
       if (initialData?._id) {
@@ -73,6 +77,26 @@ const CreateMood = ({ visible, handleClose, initialData ="", onSubmit }) => {
           )}
         </div>
 
+
+          {/* Mood Name  ar*/}
+                <div className="mb-3">
+          <label>
+            Mood Name (ar) <span className="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="mood_name_ar"
+            placeholder='Enter mood name in arabic'
+            value={formik.values.mood_name_ar}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.mood_name_ar && formik.errors.mood_name_ar && (
+            <span style={{ color: 'red' }}>{formik.errors.mood_name_ar}</span>
+          )}
+        </div>
+
         {/* Description */}
         <div className="mb-3">
           <label>
@@ -88,6 +112,24 @@ const CreateMood = ({ visible, handleClose, initialData ="", onSubmit }) => {
           />
           {formik.touched.description && formik.errors.description && (
             <span style={{ color: 'red' }}>{formik.errors.description}</span>
+          )}
+        </div>
+
+                {/* Description ar */}
+        <div className="mb-3">
+          <label>
+            Description (ar) <span className="text-danger">*</span>
+          </label>
+          <textarea
+            className="form-control"
+            name="description_ar"
+            placeholder='Enter the description in arabic'
+            value={formik.values.description_ar}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.description_ar && formik.errors.description_ar && (
+            <span style={{ color: 'red' }}>{formik.errors.description_ar}</span>
           )}
         </div>
 

@@ -70,6 +70,29 @@ const AffirmationTable = ({ affirmations, loading, totalrows, moodOptions }) => 
           </span>
         )
       },
+{
+  header: "Text (ar)",
+  accessorKey: "text_ar",
+  cell: ({ getValue, row }) => {
+    const value = getValue() || "N/A";
+
+    return (
+      <span
+        title={value}
+        style={{
+          display: "inline-block",
+          maxWidth: "250px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          verticalAlign: "middle",
+        }}
+      >
+        {value}
+      </span>
+    );
+  },
+},
       {
         header: "Language",
         accessorKey: "langCode",

@@ -20,12 +20,14 @@ const CreateAffirmation = ({
     enableReinitialize: true,
     initialValues: {
       text: initialData?.text || '',
+      text_ar:initialData?.text_ar || '',
       langCode: initialData?.langCode || '',
       active: initialData?.active ?? true, 
       moodId: initialData?.moodId?._id || null,
     },
     validationSchema: Yup.object({
       text: Yup.string().required('Text is required'),
+      text_ar: Yup.string().required('Text in arabic is required'),
       langCode: Yup.string()
         .required('Language code is required')
         .length(2, 'Lang code must be 2 characters')
@@ -84,6 +86,22 @@ const CreateAffirmation = ({
           />
           {formik.touched.text && formik.errors.text && (
             <span style={{ color: 'red' }}>{formik.errors.text}</span>
+          )}
+        </div>
+                <div className="mb-3">
+          <label>
+            Text (ar) <span className="text-danger">*</span>
+          </label>
+          <textarea
+            className="form-control"
+            name="text"
+            placeholder="Enter affirmation text in arabic"
+            value={formik.values.text_ar}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.text_ar && formik.errors.text_ar && (
+            <span style={{ color: 'red' }}>{formik.errors.text_ar}</span>
           )}
         </div>
 

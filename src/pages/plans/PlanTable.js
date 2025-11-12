@@ -51,12 +51,27 @@ const PlanTable = ({ plans, loading, totalrows }) => {
   // Table columns
   const columns = useMemo(
     () => [
-      { header: "Plan Name", accessorKey: "plan_name" },
-      { header: "Tokens", accessorKey: "tokens" },
-      { header: "Per Day Limit", accessorKey: "per_day_limit" },
-      { header: "Days", accessorKey: "days" },
-      { header: "Amount", accessorKey: "amount" },
-      { header: "Currency", accessorKey: "currency" },
+      { header: "Plan Name", accessorKey: "plan_name",
+        cell:({getValue})=>getValue() || "N/A"
+       },
+       { header: "Plan Name (ar)", accessorKey: "plan_name_ar",
+        cell:({getValue})=>getValue() || "N/A"
+        },
+      { header: "Tokens", accessorKey: "tokens",
+        cell:({getValue})=>getValue() || "N/A"
+       },
+      { header: "Per Day Limit", accessorKey: "per_day_limit",
+        cell:({getValue})=>getValue() || "N/A"
+       },
+      { header: "Days", accessorKey: "days",
+        cell:({getValue})=>getValue() || "N/A"
+       },
+      { header: "Amount", accessorKey: "amount",
+        cell:({getValue})=>getValue() || "N/A"
+       },
+      { header: "Currency", accessorKey: "currency",
+        cell:({getValue})=>getValue() || "N/A"
+       },
       {
         header: "Created At",
         accessorKey: "created_at",

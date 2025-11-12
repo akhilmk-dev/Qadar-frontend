@@ -12,6 +12,7 @@ const CreatePlan = ({ visible, handleClose, initialData, onSubmit }) => {
     enableReinitialize: true,
     initialValues: {
       plan_name: initialData?.plan_name || '',
+      plan_name_ar: initialData?.plan_name_ar || '',
       tokens: initialData?.tokens || '',
       per_day_limit: initialData?.per_day_limit || '',
       days: initialData?.days || '',
@@ -20,6 +21,8 @@ const CreatePlan = ({ visible, handleClose, initialData, onSubmit }) => {
     },
     validationSchema: Yup.object({
       plan_name: Yup.string().required('Plan name is required'),
+       plan_name_ar: Yup.string().required('Plan name in arabic is required'),
+
       tokens: Yup.number()
         .typeError('Tokens must be a number')
         .positive('Tokens must be positive')
@@ -89,6 +92,24 @@ const CreatePlan = ({ visible, handleClose, initialData, onSubmit }) => {
           />
           {formik.touched.plan_name && formik.errors.plan_name && (
             <span style={{ color: 'red' }}>{formik.errors.plan_name}</span>
+          )}
+        </div>
+
+                <div className="mb-3">
+          <label>
+            Plan Name (ar) <span className="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            name="plan_name_ar"
+            placeholder="Enter plan name in arabic"
+            value={formik.values.plan_name_ar}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.plan_name_ar && formik.errors.plan_name_ar && (
+            <span style={{ color: 'red' }}>{formik.errors.plan_name_ar}</span>
           )}
         </div>
 

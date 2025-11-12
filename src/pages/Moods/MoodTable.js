@@ -57,11 +57,24 @@ const MoodTable = ({ moods, loading, totalrows }) => {
       {
         header: "Mood Name",
         accessorKey: "mood_name",
+        cell:({getValue})=>getValue() || "N/A"
+      },
+      {
+        header:"Mood Name (ar)",
+        accessorKey:"mood_name_ar",
+        cell:({getValue})=>getValue() || "N/A"
       },
       {
         header: "Description",
         accessorKey: "description",
+        cell:({getValue})=>getValue() || "N/A"
       },
+      {
+        header: "Description (ar)",
+        accessorKey: "description_ar",
+        cell:({getValue})=>getValue() || "N/A"
+      },
+
       {
         header: "Created At",
         accessorKey: "createdAt",
