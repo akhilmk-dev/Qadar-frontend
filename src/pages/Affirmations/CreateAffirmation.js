@@ -20,9 +20,9 @@ const CreateAffirmation = ({
     enableReinitialize: true,
     initialValues: {
       text: initialData?.text || '',
-      text_ar:initialData?.text_ar || '',
+      text_ar: initialData?.text_ar || '',
       langCode: initialData?.langCode || '',
-      active: initialData?.active ?? true, 
+      active: initialData?.active ?? true,
       moodId: initialData?.moodId?._id || null,
     },
     validationSchema: Yup.object({
@@ -37,7 +37,7 @@ const CreateAffirmation = ({
     onSubmit: (values, { resetForm }) => {
       const payload = {
         ...values,
-        active: values.active, 
+        active: values.active,
       };
       if (initialData?._id) {
         onSubmit(initialData._id, payload, () => {
@@ -88,13 +88,13 @@ const CreateAffirmation = ({
             <span style={{ color: 'red' }}>{formik.errors.text}</span>
           )}
         </div>
-                <div className="mb-3">
+        <div className="mb-3">
           <label>
             Text (ar) <span className="text-danger">*</span>
           </label>
           <textarea
             className="form-control"
-            name="text"
+            name="text_ar"
             placeholder="Enter affirmation text in arabic"
             value={formik.values.text_ar}
             onChange={formik.handleChange}
@@ -148,7 +148,7 @@ const CreateAffirmation = ({
 
         {/* Active (Now Switch) */}
         <div className="mb-3 ">
-          <label>Active</label><br/>
+          <label>Active</label><br />
           <Switch
             checked={formik.values.active}
             onChange={(checked) => formik.setFieldValue('active', checked)}
